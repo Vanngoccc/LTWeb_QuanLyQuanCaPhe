@@ -62,7 +62,14 @@ namespace QuanLyQuanCaPhe.Controllers
                     Session["UserID"] = user.UserID;
                     Session["HoTen"] = user.HoTen;
                     Session["Role"] = user.Role;
-                    return RedirectToAction("Index", "Home");
+                    if ((int)Session["Role"] == 1)
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 ModelState.AddModelError("", "Email hoặc Mật khẩu không đúng.");
             }
