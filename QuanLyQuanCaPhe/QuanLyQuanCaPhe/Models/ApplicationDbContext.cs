@@ -14,5 +14,7 @@ namespace QuanLyQuanCaPhe.Models
         public DbSet<User> Users { get; set; }
         public DbSet<LoaiSP> LoaiSPs { get; set; }
         public DbSet<SanPham> SanPhams { get; set; }
+        public DbSet<DonHang> DonHangs { get; set; }
+        public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
     }
 }
