@@ -1,16 +1,55 @@
-﻿
-@{
-    ViewBag.Title = "Trang Admin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Bảng điều khiển (Dashboard)";
 }
 
-<h2>Chào mừng Admin!</h2>
-<p>Đây là trang Dashboard của bạn.</p>
+<h2>@ViewBag.Title</h2>
+<hr />
 
-@Html.ActionLink("Quản lý Loại Sản Phẩm", "Index", "LoaiSPs")
-
-<br />
-@Html.ActionLink("Quản lý Sản Phẩm", "Index", "SanPhams")
-
-<br />
-@Html.ActionLink("Quản lý Đơn Hàng", "Index", "DonHangs")
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped" style="text-align: center;">
+            <thead style="background-color: #f9f9f9;">
+                <tr>
+                    <th>Tổng Doanh Thu (Đã hoàn thành)</th>
+                    <th>Doanh Thu Hôm Nay</th>
+                    <th>Đơn Hàng Mới (Chờ xử lý)</th>
+                    <th>Tổng Khách Hàng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3 style="color: #337ab7; margin: 10px 0;">
+                            @String.Format("{0:N0}", ViewBag.TongDoanhThu) VNĐ
+                        </h3>
+                    </td>
+                    <td>
+                        <h3 style="color: #5cb85c; margin: 10px 0;">
+                            @String.Format("{0:N0}", ViewBag.DoanhThuHomNay) VNĐ
+                        </h3>
+                    </td>
+                    <td>
+                        <h3 style="color: #5bc0de; margin: 10px 0;">
+                            @ViewBag.DonHangMoi
+                        </h3>
+                    </td>
+                    <td>
+                        <h3 style="color: #f0ad4e; margin: 10px 0;">
+                            @ViewBag.TongKhachHang
+                        </h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Lối tắt quản lý</h3>
+        <div class="btn-group-lg">
+            @Html.ActionLink("Quản lý Đơn Hàng", "Index", "DonHangs", null, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Quản lý Sản Phẩm", "Index", "SanPhams", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Quản lý Loại Sản Phẩm", "Index", "LoaiSPs", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+</div>
