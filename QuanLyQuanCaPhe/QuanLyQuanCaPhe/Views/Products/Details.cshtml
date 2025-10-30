@@ -1,0 +1,21 @@
+﻿@model QuanLyQuanCaPhe.Models.SanPham
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="@Model.HinhAnh" class="img-fluid rounded shadow" alt="@Model.TenSP" />
+        </div>
+        <div class="col-md-7">
+            <h2>@Model.TenSP</h2>
+            <p><strong>Giá bán:</strong> @Model.GiaBan.ToString("N0") VNĐ</p>
+            <p><strong>Loại sản phẩm:</strong> @Model.LoaiSP?.TenLoai</p>
+            <p>@Model.MoTaChiTiet</p>
+            <a href="@Url.Action("Index", "Products")" class="btn btn-secondary">← Quay lại</a>
+        </div>
+    </div>
+</div>
+
