@@ -1,65 +1,38 @@
 ﻿@model QuanLyQuanCaPhe.Models.DonHang
 
 @{
-    ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Xóa Đơn hàng";
 }
 
-<h2>Delete</h2>
+<h2 class="text-danger">Xóa Đơn hàng</h2>
+<hr />
+<h3 class="alert alert-danger">Bạn có chắc chắn muốn xóa vĩnh viễn đơn hàng này không?</h3>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>DonHang</h4>
-    <hr />
+    <h4 class="mb-3">Mã đơn hàng: @Model.MaDH</h4>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.User.HoTen)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.HoTen)
-        </dd>
+        <dt>Khách hàng:</dt>
+        <dd>@Html.DisplayFor(model => model.User.HoTen)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayDat)
-        </dt>
+        <dt>Tổng tiền:</dt>
+        <dd class="text-danger">@String.Format("{0:N0} VNĐ", Model.TongTien)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayDat)
-        </dd>
+        <dt>Ngày đặt:</dt>
+        <dd>@Html.DisplayFor(model => model.NgayDat)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TongTien)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TongTien)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TrangThai)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DiaChiGiao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DiaChiGiao)
-        </dd>
+        <dt>Địa chỉ giao:</dt>
+        <dd>@Html.DisplayFor(model => model.DiaChiGiao)</dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-actions no-color mt-4">
+            <input type="submit" value="Xác nhận Xóa" class="btn btn-danger" />
+            @Html.ActionLink("Hủy bỏ", "Index", null, new { @class = "btn btn-default" })
         </div>
     }
 </div>

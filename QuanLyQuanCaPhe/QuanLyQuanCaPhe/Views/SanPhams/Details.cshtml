@@ -1,59 +1,42 @@
 ﻿@model QuanLyQuanCaPhe.Models.SanPham
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Chi tiết Sản phẩm: " + Model.TenSP;
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>SanPham</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiSP.TenLoai)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoaiSP.TenLoai)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TenSP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenSP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GiaBan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GiaBan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HinhAnh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HinhAnh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoTaChiTiet)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoTaChiTiet)
-        </dd>
-
-    </dl>
+<div class="row pt-4">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaSP }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="row">
+    <div class="col-md-6 text-center">
+        @if (!string.IsNullOrEmpty(Model.HinhAnh))
+        {
+            <img src="@Url.Content(Model.HinhAnh)" alt="@Model.TenSP" class="img-thumbnail" style="max-width: 100%; height: auto;" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/Content/Images/placeholder.jpg")" alt="Chưa có ảnh" class="img-thumbnail" style="max-width: 100%; height: auto;" />
+        }
+    </div>
+
+    <div class="col-md-6">
+        <h3 class="mt-4 mt-md-0">@Model.TenSP</h3>
+        <p class="text-muted">@Model.LoaiSP.TenLoai</p>
+
+        <h2 class="text-danger">
+            @String.Format("{0:N0}", Model.GiaBan) VNĐ
+        </h2>
+
+        <p><strong>Mô tả chi tiết:</strong></p>
+        <p>@Html.Raw(Model.MoTaChiTiet)</p>
+
+        <div class="mt-4">
+            @Html.ActionLink("Sửa sản phẩm", "Edit", new { id = Model.MaSP }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary" })
+        </div>
+    </div>
+</div>

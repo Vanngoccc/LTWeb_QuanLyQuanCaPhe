@@ -1,54 +1,84 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/bootstrap-5.0.2/bootstrap-5.0.2/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap-5.0.2/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <link href="~/Content/Css/StyleSheet1.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#" class="logo">Cà Phê<span> Shop</span></a>
 
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="navbar-text">
-                            Chào, @(Session["HoTen"] != null ? Session["HoTen"].ToString() : User.Identity.Name)
-                        </li>
-                        <li>@Html.ActionLink("Đăng xuất", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Đăng ký", "Register", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Đăng nhập", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                </ul>
+            <nav class="main-nav">
+                <a href="#">Trang chủ</a>
+
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Sản phẩm ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">Cà phê truyền thống</a>
+                        <a href="#">Trà sữa & Trà trái cây</a>
+                        <a href="#">Freeze & Đá xay</a>
+                        <a href="#">Bánh ngọt & Đồ ăn nhẹ</a>
+                    </div>
+                </div>
+
+                <a href="#">Giới thiệu</a>
+                <a href="">Liên hệ</a>
+            </nav>
+
+            <form class="search-box" action="@Url.Action("Search", "Products")" method="get">
+                <input type="text" name="q" placeholder="Tìm sản phẩm..." aria-label="Tìm kiếm" />
+                <button type="submit">Tìm</button>
+            </form>
+            <div class="auth-links ms-3">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span class="text-white me-2">Chào, @(Session["HoTen"] != null ? Session["HoTen"].ToString() : User.Identity.Name)</span>
+                    <span class="text-white">|</span>
+                    @Html.ActionLink("Đăng xuất", "Logout", "Account", null, new { @class = "text-white text-decoration-none ms-2" })
+                }
+                else
+                {
+                    @Html.ActionLink("Đăng nhập", "Login", "Account", null, new { @class = "text-white text-decoration-none me-2" })
+                    <span class="text-white">|</span>
+                    @Html.ActionLink("Đăng ký", "Register", "Account", null, new { @class = "text-white text-decoration-none ms-2" })
+                }
+            </div>
+            <div class="cart-box">
+                <a href="#">
+                    <img src="~/Content/hinhanh/giohang.jpg" style="width:30px; margin-right:5px;">
+                </a>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
+    </header>
+    <!-- HEADER -->
+    <!-- MAIN -->
+    <main class="main-content pt-5 pb-5">
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+    </main>
+    <!-- MAIN -->
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <a href="#" class="logo">Cà Phê<span> Shop</span></a>
+                <p>Địa chỉ: 123 Lê Trọng Tấn, Q.Tân Phú , TP. HCM</p>
+                <p>Điện thoại: 0909 000 111</p>
+                <p>Email: contact@capheshop.vn</p>
+            </div>
+            <div class="copy">© 2025 capheshop. All rights reserved.</div>
+        </div>
+    </footer>
+    <!-- FOOTER -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+</body>
 </body>
 </html>

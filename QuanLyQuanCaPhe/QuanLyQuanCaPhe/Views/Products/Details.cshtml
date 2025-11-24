@@ -1,0 +1,39 @@
+﻿@model QuanLyQuanCaPhe.Models.SanPham
+@{
+    ViewBag.Title = Model.TenSP;
+}
+
+<div class="row pt-5">
+
+    <div class="col-md-5">
+        <img src="@Url.Content(Model.HinhAnh ?? "/Content/hinhanh/placeholder.jpg")"
+             alt="@Model.TenSP"
+             style="max-width: 100%; height: auto; border-radius: 5px;" />
+    </div>
+
+    <div class="col-md-7">
+        <h2>@Model.TenSP</h2>
+        <hr />
+
+        <p><strong>Giá bán:</strong> <span class="text-danger fw-bold">@String.Format("{0:N0}", Model.GiaBan) VNĐ</span></p>
+        <p><strong>Loại sản phẩm:</strong> @Model.LoaiSP.TenLoai</p>
+
+        <p><strong>Mô tả chi tiết:</strong></p>
+        <p>@Model.MoTaChiTiet</p>
+
+        <hr />
+
+        <div class="d-flex align-items-center">
+
+            <input type="number" id="quantity" value="1" min="1" max="10" style="width: 70px; margin-right: 15px;" class="form-control" />
+
+            <a href="#" class="btn btn-lg btn-success">
+                🛒 Thêm vào giỏ hàng
+            </a>
+
+        </div>
+
+        <br />
+        @Html.ActionLink("← Quay về Dashboard", "Index", "Products", null, new { @class = "btn btn-secondary mb-3" })
+    </div>
+</div>

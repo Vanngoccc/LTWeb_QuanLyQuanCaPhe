@@ -1,65 +1,50 @@
 ﻿@model QuanLyQuanCaPhe.Models.SanPham
 
 @{
-    ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Xóa Sản phẩm";
 }
 
-<h2>Delete</h2>
+<h2>@ViewBag.Title</h2>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>SanPham</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiSP.TenLoai)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoaiSP.TenLoai)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TenSP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenSP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GiaBan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GiaBan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HinhAnh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HinhAnh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoTaChiTiet)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoTaChiTiet)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Cảnh báo: Hành động này không thể hoàn tác!</h4>
+    <p>Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
 </div>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <dl class="row">
+
+            <dt class="col-sm-3">Tên Sản phẩm</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.TenSP)</dd>
+
+            <dt class="col-sm-3">Loại</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.LoaiSP.TenLoai)</dd>
+
+            <dt class="col-sm-3">Giá Bán</dt>
+            <dd class="col-sm-9">@String.Format("{0:N0}", Model.GiaBan) VNĐ</dd>
+
+            <dt class="col-sm-3">Hình Ảnh</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                {
+                    <img src="@Url.Content(Model.HinhAnh)" alt="Hình ảnh" width="100" class="img-thumbnail" />
+                }
+            </dd>
+
+        </dl>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <button type="submit" class="btn btn-danger me-2">
+            <i class="bi bi-trash"></i> Xác nhận XÓA VĨNH VIỄN
+        </button>
+        @Html.ActionLink("Hủy và Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+}

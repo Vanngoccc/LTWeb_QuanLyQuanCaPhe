@@ -1,65 +1,57 @@
 ﻿@model IEnumerable<QuanLyQuanCaPhe.Models.SanPham>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Quản lý Sản phẩm";
 }
 
-<h2>Index</h2>
+<h2>Quản lý Sản phẩm</h2>
+<hr />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("← Quay về Dashboard", "Index", "Admin", null, new { @class = "btn btn-secondary mb-3" })
+
+    @Html.ActionLink("Thêm Sản phẩm mới", "Create", null, new { @class = "btn btn-success mb-3" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Tên loại")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TenSP)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GiaBan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HinhAnh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MoTaChiTiet)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiSP.TenLoai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenSP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GiaBan)
-        </td>
-        <td>
-            @if (!string.IsNullOrEmpty(item.HinhAnh))
-            {
-                <img src="@Url.Content(item.HinhAnh)" alt="Hình sản phẩm" width="100" />
-            }
-            else
-            {
-                <span>(Chưa có ảnh)</span>
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MoTaChiTiet)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaSP }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaSP }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaSP })
-        </td>
-    </tr>
-}
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr class="table-info">
+            <th>@Html.DisplayName("Ảnh")</th>
+            <th>@Html.DisplayName("Tên Sản phẩm")</th>
+            <th>@Html.DisplayName("Giá Bán")</th>
+            <th>@Html.DisplayName("Loại Sản phẩm")</th>
+            <th>@Html.DisplayName("Mô Tả Chi Tiết")</th>
+            <th style="width: 15%;">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: center;">
+                    @if (!string.IsNullOrEmpty(item.HinhAnh))
+                    {
+                        <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh" style="max-width: 80px; height: auto;" class="img-thumbnail" />
+                    }
+                    else
+                    {
+                        <span>(Không có ảnh)</span>
+                    }
+                </td>
 
+                <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+
+                <td>@String.Format("{0:N0}", item.GiaBan) VNĐ</td>
+
+                <td>@Html.DisplayFor(modelItem => item.LoaiSP.TenLoai)</td>
+
+                <td>@(item.MoTaChiTiet != null && item.MoTaChiTiet.Length > 50 ? item.MoTaChiTiet.Substring(0, 50) + "..." : item.MoTaChiTiet)</td>
+
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.MaSP }, new { @class = "btn btn-sm btn-outline-info" })
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.MaSP }, new { @class = "btn btn-sm btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

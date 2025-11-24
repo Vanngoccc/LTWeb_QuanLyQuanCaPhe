@@ -1,59 +1,85 @@
 ﻿@model QuanLyQuanCaPhe.Models.DonHang
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Chi tiết Đơn hàng #" + Model.MaDH;
+
+    // Hàm chuyển đổi trạng thái (copy từ View Index.cshtml sang)
+    string GetStatusText(int status)
+    {
+        switch (status)
+        {
+            case 0: return "Mới đặt";
+            case 1: return "Đang giao";
+            case 2: return "Hoàn thành";
+            case 3: return "Đã hủy";
+            default: return "Không xác định";
+        }
+    }
 }
 
-<h2>Details</h2>
+<h2>Chi tiết Đơn hàng #@Model.MaDH</h2>
+<hr />
 
-<div>
-    <h4>DonHang</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.User.HoTen)
-        </dt>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body bg-light mb-4">
+            <h4>Thông tin khách hàng & Đơn hàng</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>Tên Khách Hàng:</dt>
+                <dd>@Html.DisplayFor(model => model.User.HoTen)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.HoTen)
-        </dd>
+                <dt>Địa Chỉ Giao Hàng:</dt>
+                <dd>@Html.DisplayFor(model => model.DiaChiGiao)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayDat)
-        </dt>
+                <dt>Ngày Đặt Hàng:</dt>
+                <dd>@Html.DisplayFor(model => model.NgayDat)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayDat)
-        </dd>
+                <dt>Tổng Tiền:</dt>
+                <dd><h4>@String.Format("{0:N0}", Model.TongTien) VNĐ</h4></dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TongTien)
-        </dt>
+                <dt>Trạng Thái Hiện Tại:</dt>
+                <dd>
+                    <span class="badge @(Model.TrangThai == 2 ? "bg-success" : Model.TrangThai == 3 ? "bg-danger" : "bg-warning")">
+                        @GetStatusText(Model.TrangThai)
+                    </span>
+                </dd>
+            </dl>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.TongTien)
-        </dd>
+        <p>
+            @Html.ActionLink("Chỉnh sửa trạng thái", "Edit", new { id = Model.MaDH }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </dt>
+    <div class="col-md-6">
+        <h4>Chi tiết sản phẩm đã mua</h4>
+        <hr />
+        <table class="table table-sm table-striped">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th style="width: 100px;">Đơn giá</th>
+                    <th style="width: 50px;">SL</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ChiTietDonHangs)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.SanPham.TenSP)</td>
+                        <td>@String.Format("{0:N0}", item.DonGia)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                        <td>@String.Format("{0:N0}", item.SoLuong * item.DonGia)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.TrangThai)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DiaChiGiao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DiaChiGiao)
-        </dd>
-
-    </dl>
+        <div class="text-end">
+            <strong>Tổng cộng: @String.Format("{0:N0}", Model.TongTien) VNĐ</strong>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaDH }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

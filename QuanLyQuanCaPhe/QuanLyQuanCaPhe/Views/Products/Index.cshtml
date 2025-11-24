@@ -1,0 +1,36 @@
+﻿@model IEnumerable<QuanLyQuanCaPhe.Models.SanPham>
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">DANH SÁCH SẢN PHẨM</h2>
+
+<!-- Bộ lọc theo loại -->
+<form method="get" action="@Url.Action("Index", "Products")" class="text-center mb-3">
+    <select name="maLoai" onchange="this.form.submit()">
+        <option value="">-- Tất cả --</option>
+        @foreach (var loai in ViewBag.DanhSachLoai)
+        {
+            <option value="@loai.MaLoai" @(ViewBag.MaLoai == loai.MaLoai ? "selected" : "")>
+                @loai.TenLoai
+            </option>
+        }
+    </select>
+</form>
+
+<div class="row">
+    @foreach (var sp in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <img src="@sp.HinhAnh" class="card-img-top" alt="@sp.TenSP" />
+                <div class="card-body text-center">
+                    <h5>@sp.TenSP</h5>
+                    <p>@sp.GiaBan.ToString("N0") VNĐ</p>
+                    <a href="@Url.Action("Details", "Products", new { id = sp.MaSP })" class="btn btn-primary">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

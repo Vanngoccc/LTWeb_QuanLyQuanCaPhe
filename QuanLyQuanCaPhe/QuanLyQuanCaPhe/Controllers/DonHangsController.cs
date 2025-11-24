@@ -37,30 +37,6 @@ namespace QuanLyQuanCaPhe.Controllers
             return View(donHang);
         }
 
-        // GET: DonHangs/Create
-        public ActionResult Create()
-        {
-            ViewBag.MaKH = new SelectList(db.Users, "UserID", "HoTen");
-            return View();
-        }
-
-        // POST: DonHangs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaDH,MaKH,NgayDat,TongTien,TrangThai,DiaChiGiao")] DonHang donHang)
-        {
-            if (ModelState.IsValid)
-            {
-                db.DonHangs.Add(donHang);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.MaKH = new SelectList(db.Users, "UserID", "HoTen", donHang.MaKH);
-            return View(donHang);
-        }
 
         // GET: DonHangs/Edit/5
         public ActionResult Edit(int? id)

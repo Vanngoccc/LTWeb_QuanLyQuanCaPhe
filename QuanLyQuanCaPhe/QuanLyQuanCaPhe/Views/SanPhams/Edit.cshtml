@@ -1,80 +1,79 @@
 ﻿@model QuanLyQuanCaPhe.Models.SanPham
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Chỉnh sửa Sản phẩm";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
+<hr />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "SanPhams", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>SanPham</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MaSP)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.MaLoai, (SelectList)ViewBag.MaLoai, "-- Chọn loại SP --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
-            </div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Thông tin Sản phẩm</h5>
         </div>
+        <div class="card-body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.GiaBan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaSP)
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.TenSP, new { @class = "control-label" })
+                        @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.GiaBan, new { @class = "control-label" })
+                        @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.MoTaChiTiet, new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.MoTaChiTiet, 5, 40, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MoTaChiTiet, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.MaLoai, "Loại Sản phẩm", new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.MaLoai, (SelectList)ViewBag.MaLoai, "-- Chọn Loại --", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaLoai, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.HinhAnh, "Hình ảnh", new { @class = "control-label" })
+
+                        @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                        {
+                            <p>Ảnh hiện tại:</p>
+                            <img src="@Url.Content(Model.HinhAnh)" alt="Hình hiện tại" width="150" class="img-thumbnail mb-2" />
+                        }
+
+                        <input type="file" name="uploadHinh" class="form-control-file mb-2" />
+                        @Html.HiddenFor(model => model.HinhAnh) @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
             </div>
+
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HinhAnh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @if (!string.IsNullOrEmpty(Model.HinhAnh))
-                {
-                    <img src="@Url.Content(Model.HinhAnh)" alt="Hình hiện tại" width="150" class="img-thumbnail" />
-                    <br /><br />
-                }
-
-                <span>Chọn ảnh mới (nếu muốn thay thế):</span>
-                <input type="file" name="uploadHinh" class="form-control-file" />
-
-                @Html.HiddenFor(model => model.HinhAnh)
-
-                @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MoTaChiTiet, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MoTaChiTiet, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MoTaChiTiet, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaLoai, "MaLoai", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MaLoai", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MaLoai, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <div class="card-footer text-end">
+            <button type="submit" class="btn btn-success me-2">
+                <i class="bi bi-save"></i> Lưu Thay Đổi
+            </button>
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

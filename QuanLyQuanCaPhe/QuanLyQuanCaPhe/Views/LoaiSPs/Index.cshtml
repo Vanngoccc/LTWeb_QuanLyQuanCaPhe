@@ -1,40 +1,44 @@
 ﻿@model IEnumerable<QuanLyQuanCaPhe.Models.LoaiSP>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Quản lý Danh mục (Loại Sản phẩm)";
 }
 
-<h2>Index</h2>
+<h2>Quản lý Danh mục</h2>
+<hr />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("← Quay về Dashboard", "Index", "Admin", null, new { @class = "btn btn-secondary mb-3" })
+
+    @Html.ActionLink("Thêm Danh mục mới", "Create", null, new { @class = "btn btn-success mb-3" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TenLoai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MoTa)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenLoai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MoTa)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaLoai }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaLoai }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaLoai })
-        </td>
-    </tr>
-}
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr class="table-info">
+            <th style="width: 10%;">@Html.DisplayName("Mã Loại")</th>
 
+            <th>@Html.DisplayNameFor(model => model.TenLoai)</th>
+            <th>@Html.DisplayNameFor(model => model.MoTa)</th>
+            <th style="width: 15%;">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.MaLoai)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.TenLoai)</td>
+                <td>
+                    @(item.MoTa != null && item.MoTa.Length > 80 ? item.MoTa.Substring(0, 80) + "..." : item.MoTa)
+                </td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.MaLoai }, new { @class = "btn btn-sm btn-outline-info" })
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.MaLoai }, new { @class = "btn btn-sm btn-outline-secondary" })
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.MaLoai }, new { @class = "btn btn-sm btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
